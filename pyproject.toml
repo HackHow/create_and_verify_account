@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "senao-networks-interview"
+version = "0.1.0"
+description = ""
+authors = ["Howard Shen <howardshen2306@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+flask = "^3.0.2"
+pytest = "^8.1.1"
+flask-redoc = "^0.2.1"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+black = "^24.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
