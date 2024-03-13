@@ -1,0 +1,48 @@
+parameters:
+  - in: body
+    name: body
+    description: User's registration data
+    required: true
+    schema:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: john_doe
+        password:
+          type: string
+          example: SecurePassword123
+responses:
+  201:
+    description: User registered successfully
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+  400:
+    description: Invalid request parameters
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        reason:
+          type: string
+          example: "Invalid parameters"
+  409:
+    description: Username already exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        reason:
+          type: string
+          example: "Username already exists"
