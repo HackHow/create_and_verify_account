@@ -1,4 +1,4 @@
-from psycopg2 import IntegrityError
+from psycopg2 import IntegrityError, Error
 
 from app.utils.db import get_db
 
@@ -25,5 +25,22 @@ def register_account(username, password):
             return None, "Username already exists"
         else:
             return None, "Registration failed due to a database error."
+    finally:
+        cursor.close()
+
+
+def login(username):
+    db = get_db()
+    cursor = db.cursor()
+
+    try:
+        select_query = """SELECT password FROM accounts WHERE username = %s"""
+        cursor.execute(select_query, (username,))
+        result = cursor.fetchone()
+
+        return result[0] if result else None
+    except Error as e:
+        print("Database error:", e)
+        return None
     finally:
         cursor.close()

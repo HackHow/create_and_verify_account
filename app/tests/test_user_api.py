@@ -1,5 +1,6 @@
 from unittest.mock import MagicMock, patch
 
+import bcrypt
 import pytest
 from psycopg2 import IntegrityError
 
@@ -113,3 +114,91 @@ def test_register_existing_user(client, mock_cursor_with_integrity_error):
 
         assert response.status_code == 409
         assert response.json["reason"] == "Username already exists"
+
+
+@pytest.fixture
+def mock_cursor_with_correct_password():
+    """
+    This fixture returns a mock cursor that simulates retrieving a hashed password,
+    representing the scenario where the provided username exists and the password is correct.
+    """
+    mock_cursor = MagicMock()
+    hashed_password = bcrypt.hashpw(b"Testpassword1!", bcrypt.gensalt())
+    mock_cursor.fetchone.return_value = (memoryview(hashed_password),)
+
+    return mock_cursor
+
+
+def test_login_success(client, mock_cursor_with_correct_password):
+    with patch("app.models.user.get_db") as mock_get_db:
+        mock_db = MagicMock()
+        mock_db.cursor.return_value = mock_cursor_with_correct_password
+        mock_get_db.return_value = mock_db
+
+        response = client.post(
+            "/user/login", json={"username": "testuser", "password": "Testpassword1!"}
+        )
+
+        assert response.status_code == 200
+        assert response.json["success"] is True
+
+
+def test_login_invalid_password(client, mock_cursor_with_correct_password):
+    with patch("app.models.user.get_db") as mock_get_db:
+        mock_db = MagicMock()
+        mock_db.cursor.return_value = mock_cursor_with_correct_password
+        mock_get_db.return_value = mock_db
+
+        response = client.post(
+            "/user/login", json={"username": "testuser", "password": "WrongPassword"}
+        )
+
+        assert response.status_code == 401
+        assert response.json["success"] is False
+        assert response.json["reason"] == "Invalid password."
+
+
+def test_login_failed_attempts_limit(client, mock_cursor_with_correct_password):
+    with patch("app.models.user.get_db") as mock_get_db:
+        mock_db = MagicMock()
+        mock_db.cursor.return_value = mock_cursor_with_correct_password
+        mock_get_db.return_value = mock_db
+
+        for _ in range(5):
+            client.post(
+                "/user/login",
+                json={"username": "testuser", "password": "WrongPassword"},
+            )
+
+        response = client.post(
+            "/user/login", json={"username": "testuser", "password": "WrongPassword!"}
+        )
+
+        assert response.status_code == 429
+        assert "Too many failed attempts" in response.json["reason"]
+
+
+@pytest.fixture
+def mock_cursor_with_nonexistent_user():
+    """
+    This fixture returns a mock cursor that simulates the scenario where the provided username does not exist.
+    """
+    mock_cursor = MagicMock()
+    mock_cursor.fetchone.return_value = None
+    return mock_cursor
+
+
+def test_login_nonexistent_user(client, mock_cursor_with_nonexistent_user):
+    with patch("app.models.user.get_db") as mock_get_db:
+        mock_db = MagicMock()
+        mock_db.cursor.return_value = mock_cursor_with_nonexistent_user
+        mock_get_db.return_value = mock_db
+
+        response = client.post(
+            "/user/login",
+            json={"username": "nonexistentuser", "password": "AnyPassword"},
+        )
+
+        assert response.status_code == 404
+        assert response.json["success"] is False
+        assert response.json["reason"] == "Username does not exist."

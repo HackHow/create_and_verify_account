@@ -1,3 +1,5 @@
+summary: User Register
+description: Register username and password
 parameters:
   - in: body
     name: body

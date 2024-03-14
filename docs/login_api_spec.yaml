@@ -1,0 +1,60 @@
+summary: User login
+description: Login with username and password
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: john_doe
+        password:
+          type: string
+          example: SecurePassword123
+responses:
+  200:
+    description: Login successful
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+  401:
+    description: Invalid password
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        reason:
+          type: string
+          example: "Invalid password."
+  404:
+    description: Username does not exist
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        reason:
+          type: string
+          example: "Username does not exist."
+  429:
+    description: Too many failed attempts
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        reason:
+          type: string
+          example: "Too many failed attempts. Please try again in a minute."

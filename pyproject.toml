@@ -2,7 +2,7 @@
 name = "senao-networks-interview"
 version = "0.1.0"
 description = ""
-authors = ["Howard Shen <howardshen2306@gmail.com>"]
+authors = ["Howard"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
