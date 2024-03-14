@@ -10,7 +10,7 @@ user_bp = Blueprint("user", __name__, url_prefix="/user")
 
 
 @user_bp.route("/register", methods=["POST"])
-@swag_from("../../docs/account_api_spec.yaml")
+@swag_from("../../docs/register_account_api_spec.yaml")
 def register_account():
     data = request.json
     username = data.get("username")
