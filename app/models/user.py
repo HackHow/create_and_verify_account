@@ -8,9 +8,14 @@ def register_account(username, password):
     cursor = db.cursor()
 
     try:
+        create_table_query = """CREATE TABLE IF NOT EXISTS accounts 
+            (user_id SERIAL PRIMARY KEY, 
+            username VARCHAR(32) UNIQUE NOT NULL, 
+            password BYTEA NOT NULL)"""
+        cursor.execute(create_table_query)
+
         postgres_insert_query = """INSERT INTO accounts (username, password) VALUES (%s, %s) RETURNING user_id"""
         record_to_insert = (username, password)
-
         cursor.execute(postgres_insert_query, record_to_insert)
 
         user_id = cursor.fetchone()[0]
