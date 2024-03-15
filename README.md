@@ -125,7 +125,7 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
     ```
 
 2. Based on
-   the [.env.sample](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example),
+   the [.env.example](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example),
    create a `.env file`, example:
     ```text
    DATABASE_URL=postgresql://postgres:senao@localhost/interview
