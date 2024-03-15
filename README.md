@@ -113,8 +113,8 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
   It's also recommended to manage versions using [pyenv](https://github.com/pyenv/pyenv?tab=readme-ov-file#unixmacos)).
 - Download [Poetry](https://python-poetry.org/docs/#installation) to verify if the application executes correctly on
   your local environment. The recommended download method
-  is [Manually (advanced)](https://python-poetry.org/docs/#installation), creating a separate virtual environment for
-  Poetry using `venv`.
+  is [Manually (advanced)](https://python-poetry.org/docs/#installing-manually), creating a separate virtual environment
+  for Poetry using `venv`.
   > This approach allows you to test application startup and basic functionality. After verifying,
   the entire setup can be easily removed by deleting the directory, making this process clean and reversible.
 
