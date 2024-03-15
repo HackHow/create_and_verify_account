@@ -14,7 +14,7 @@
 - [Local Setup Tutorial](#local-setup-tutorial)
     - [Local Installation Requirements](#local-installation-requirements)
     - [Running the Application Locally](#running-the-application-locally)
-    - [Local API Testing](#local-api-testing)
+    - [Local API Testing with pytest](#local-api-testing-with-pytest)
 
 ## Getting Started
 
@@ -144,7 +144,7 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
     flask --app main run 
     ```
 
-### Local API Testing [pytest](https://docs.pytest.org/en/8.0.x/)
+### Local API Testing with [pytest](https://docs.pytest.org/en/8.0.x/)
 
 Move to `tests` directory
 
