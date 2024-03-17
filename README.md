@@ -37,19 +37,24 @@ cd senao_networks_interview
 
 ## Running the Application
 
-### With Docker
+1. Based on
+   the [.env.example](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example)
+   ,create a `.env` file, example:
+   ```text
+   DATABASE_URL=postgresql://postgres:senao@localhost/interview
+   POSTGRES_PASSWORD=senao
+   POSTGRES_DB=interview
+   ```
 
-Run `docker-compose.yaml`:
+2. Run `docker-compose.yaml`:
+   ```shell
+   docker-compose up -d
+   ```
+   > No need to run docker pull <image>, as docker-compose up -d automatically pulls the necessary PostgreSQL and
+   custom [Flask App Image](https://hub.docker.com/repository/docker/howard23/senao-networks-interview-flask-app/general).
+   Therefore, [Python](https://www.python.org/) installation is not required for project execution!
 
-```shell
-docker-compose up -d
-```
-
-> No need to run docker pull <image>, as docker-compose up -d automatically pulls the necessary PostgreSQL and
-> custom [Flask App Image](https://hub.docker.com/repository/docker/howard23/senao-networks-interview-flask-app/general)
-> Therefore, [Python](https://www.python.org/) installation is not required for project execution!
-
-For local execution instructions, refer to [here](#local-setup-tutorial)
+#### For local execution instructions, refer to [here](#local-setup-tutorial)
 
 ## Features and Usage
 
@@ -59,8 +64,9 @@ For local execution instructions, refer to [here](#local-setup-tutorial)
 
 - Seeing `Hello World` confirms successful service startup. Next, use **Postman** for API testing to ensure responses
   meet expectations
+
   > Remember, you must register and verify login with the registered account and password to receive successful
-  verification responses; otherwise, a "user not found" message will be returned
+  > verification responses; otherwise, a "user not found" message will be returned
 
     - **Create account:**
 
@@ -90,8 +96,9 @@ For local execution instructions, refer to [here](#local-setup-tutorial)
 ## Known Issues and Improvement Plans
 
 - **Issues：**
-    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's *
-      *_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
+
+    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's \* \*
+      _IF NOT EXISTS_\*\* for table creation is not viable for medium to large-scale or multi-user projects.
     - The verification API, which requires a cooldown after 5 failed attempts, uses a global dictionary with **username
       ** as key for **"last_attempt_time"** and **"attempts"**. There are issues with verifying if a user exists,
       despite **username** being unique.
@@ -116,38 +123,44 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
   is [Manually (advanced)](https://python-poetry.org/docs/#installing-manually), creating a separate virtual environment
   for Poetry using `venv`.
   > This approach allows you to test application startup and basic functionality. After verifying,
-  the entire setup can be easily removed by deleting the directory, making this process clean and reversible.
+  > the entire setup can be easily removed by deleting the directory, making this process clean and reversible.
 
 ### Running the Application Locally
 
 1. ```shell
    poetry config virtualenvs.in-project true
    ```
+
    > By executing the command `poetry config virtualenvs.in-project true`, we instruct Poetry to create the virtual
-   environment inside the project directory itself, rather than in a default global location. This setting is crucial
-   for ensuring that each project has its isolated environment, facilitating dependency management and avoiding
-   conflicts. It also makes the project more portable and easier to share with others, as the environment configuration
-   travels with the project.
+   > environment inside the project directory itself, rather than in a default global location. This setting is crucial
+   > for ensuring that each project has its isolated environment, facilitating dependency management and avoiding
+   > conflicts. It also makes the project more portable and easier to share with others, as the environment
+   configuration
+   > travels with the project.
 
 2. ```shell
    poetry env use python
    ```
+
    > Following this configuration with poetry env use python further enhances the project setup by specifying that
-   Poetry should use the system's Python interpreter for the project's virtual environment. If a virtual environment
-   does not already exist in the project directory, Poetry will create a new one, thanks to the earlier configuration.
-   This sequence of commands ensures that the virtual environment is both located within the project (making it
-   self-contained) and using the desired Python interpreter. This approach aids in maintaining consistency across
-   development environments and among team members, by ensuring everyone is working with the same Python version and set
-   of dependencies.
+   > Poetry should use the system's Python interpreter for the project's virtual environment. If a virtual environment
+   > does not already exist in the project directory, Poetry will create a new one, thanks to the earlier configuration.
+   > This sequence of commands ensures that the virtual environment is both located within the project (making it
+   > self-contained) and using the desired Python interpreter. This approach aids in maintaining consistency across
+   > development environments and among team members, by ensuring everyone is working with the same Python version and
+   set
+   > of dependencies.
 
 3. Install the required packages:
-    ```shell
-    poetry install
-    ```
+
+   ```shell
+   poetry install
+   ```
 
 4. Based on
    the [.env.example](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example),
    create a `.env` file, example:
+
    ```text
    DATABASE_URL=postgresql://postgres:senao@localhost/interview
    POSTGRES_PASSWORD=senao
@@ -155,9 +168,10 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
    ```
 
 5. Start the database with `docker-compose.yaml`:
-    ```shell
-    docker-compose up -d db
-    ```
+
+   ```shell
+   docker-compose up -d db
+   ```
 
 6. Run the application:
    ```shell
@@ -177,4 +191,3 @@ Move to `tests/` directory
 cd app/tests/
 pytest
 ```
-
