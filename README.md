@@ -39,7 +39,7 @@ cd senao_networks_interview
 
 1. Based on
    the [.env.example](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example)
-   ,create a `.env` file, example:
+   , create a `.env` file, example:
    ```text
    DATABASE_URL=postgresql://postgres:senao@localhost/interview
    POSTGRES_PASSWORD=senao
