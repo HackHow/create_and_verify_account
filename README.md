@@ -97,8 +97,7 @@ cd senao_networks_interview
 
 - **Issues：**
 
-    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's \* \*
-      _IF NOT EXISTS_\*\* for table creation is not viable for medium to large-scale or multi-user projects.
+    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's **_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
     - The verification API, which requires a cooldown after 5 failed attempts, uses a global dictionary with **username
       ** as key for **"last_attempt_time"** and **"attempts"**. There are issues with verifying if a user exists,
       despite **username** being unique.
