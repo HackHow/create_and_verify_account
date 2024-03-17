@@ -90,7 +90,8 @@ For local execution instructions, refer to [here](#local-setup-tutorial)
 ## Known Issues and Improvement Plans
 
 - **Issues：**
-    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's **_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
+    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's *
+      *_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
     - The verification API, which requires a cooldown after 5 failed attempts, uses a global dictionary with **username
       ** as key for **"last_attempt_time"** and **"attempts"**. There are issues with verifying if a user exists,
       despite **username** being unique.
@@ -119,37 +120,61 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
 
 ### Running the Application Locally
 
-1. Install the required packages:
+1. ```shell
+   poetry config virtualenvs.in-project true
+   ```
+   > By executing the command `poetry config virtualenvs.in-project true`, we instruct Poetry to create the virtual
+   environment inside the project directory itself, rather than in a default global location. This setting is crucial
+   for ensuring that each project has its isolated environment, facilitating dependency management and avoiding
+   conflicts. It also makes the project more portable and easier to share with others, as the environment configuration
+   travels with the project.
+
+2. ```shell
+   poetry env use python
+   ```
+   > Following this configuration with poetry env use python further enhances the project setup by specifying that
+   Poetry should use the system's Python interpreter for the project's virtual environment. If a virtual environment
+   does not already exist in the project directory, Poetry will create a new one, thanks to the earlier configuration.
+   This sequence of commands ensures that the virtual environment is both located within the project (making it
+   self-contained) and using the desired Python interpreter. This approach aids in maintaining consistency across
+   development environments and among team members, by ensuring everyone is working with the same Python version and set
+   of dependencies.
+
+3. Install the required packages:
     ```shell
-    poetry insall
+    poetry install
     ```
 
-2. Based on
+4. Based on
    the [.env.example](https://github.com/HackHow/senao_networks_interview/blob/docs/add_user_guide_content/.env.example),
-   create a `.env file`, example:
-    ```text
+   create a `.env` file, example:
+   ```text
    DATABASE_URL=postgresql://postgres:senao@localhost/interview
-    POSTGRES_PASSWORD=senao
-    POSTGRES_DB=interview
+   POSTGRES_PASSWORD=senao
+   POSTGRES_DB=interview
    ```
 
-3. Start the database with `docker-compose.yaml`::
+5. Start the database with `docker-compose.yaml`:
     ```shell
     docker-compose up -d db
     ```
 
-4. Run the application:
-    ```shell
-    cd app/
-    flask --app main run 
-    ```
+6. Run the application:
+   ```shell
+   cd app/
+   poetry run flask --app main run
+   ```
+   or
+   ```shell
+   poetry run flask --app app.main run
+   ```
 
 ### Local API Testing with [pytest](https://docs.pytest.org/en/8.0.x/)
 
-Move to `tests` directory
+Move to `tests/` directory
 
 ```shell
 cd app/tests/
-pyest
+pytest
 ```
 
