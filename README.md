@@ -97,8 +97,11 @@ cd senao_networks_interview
 
 - **Issues：**
 
-    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's **_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
-    - The verification API, which requires a cooldown after 5 failed attempts, uses a global dictionary with **username** as key for **"last_attempt_time"** and **"attempts"**. There are issues with verifying if a user exists, despite **username** being unique.
+    - The project utilizes direct SQL queries, making DB migrations time-consuming. The workaround of using SQL's *
+      *_IF NOT EXISTS_** for table creation is not viable for medium to large-scale or multi-user projects.
+    - The verification API, which requires a cooldown after 5 failed attempts, uses a global dictionary with **username
+      ** as key for **"last_attempt_time"** and **"attempts"**. There are issues with verifying if a user exists,
+      despite **username** being unique.
 
 - **Improvement:**
     - Explore more tools such as [SQLAlchemy](https://www.sqlalchemy.org/) for future projects for its extensive
@@ -125,7 +128,7 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
 ### Running the Application Locally
 
 1. ```shell
-   poetry config virtualenvs.in-project true
+   poetry configs virtualenvs.in-project true
    ```
 
    > By executing the command `poetry config virtualenvs.in-project true`, we instruct Poetry to create the virtual
@@ -167,7 +170,7 @@ In addition to the tools mentioned in [Getting Started](#getting-started), you w
 5. Start the database with `docker-compose.yaml`:
 
    ```shell
-   docker-compose up -d db
+   docker compose up -d db
    ```
 
 6. Run the application:
