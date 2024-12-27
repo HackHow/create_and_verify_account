@@ -17,7 +17,7 @@ WORKDIR /Flask-app
 # Install dependencies
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry config virtualenvs.in-project true \
+RUN poetry configs virtualenvs.in-project true \
     && poetry env use python \
     && poetry install --no-dev
 
